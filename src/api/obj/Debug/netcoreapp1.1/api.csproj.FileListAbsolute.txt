@@ -1,0 +1,10 @@
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\api.deps.json
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\api.runtimeconfig.json
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\api.runtimeconfig.dev.json
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\api.dll
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\api.pdb
+C:\Aloe\src\api\obj\Debug\netcoreapp1.1\api.AssemblyInfo.cs
+C:\Aloe\src\api\obj\Debug\netcoreapp1.1\api.dll
+C:\Aloe\src\api\obj\Debug\netcoreapp1.1\api.pdb
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\Microsoft.DiaSymReader.Native.x86.dll
+C:\Aloe\src\api\bin\Debug\netcoreapp1.1\Microsoft.DiaSymReader.Native.amd64.dll
