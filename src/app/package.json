@@ -1,0 +1,17 @@
+{
+    "name": "aloe",
+    "version": "0.0.1",
+    "description": "",
+    "author": "Andrew Roberts",
+    "repository": "",
+    "main": "main.js",
+    "devDependencies": {
+        "electron": "^1.4.1"
+    },
+    "dependencies": {
+        "angular":"^1.6.5"
+    },
+    "scripts": {
+        "start": "electron ."
+    }
+}
