@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+
+    <!-- <link rel='stylesheet' href='assets/fonts/roboto'/> -->
+    <link type='text/css' rel='stylesheet' href='assets/css/materialize.css' media='screen,projection'/>
+
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+
+    <title>Aloe</title>
+</head>
+
+<body>
+    <ng-include src="'Components/navbar.html'"></ng-include>
+    <div class='container' ng-controller='HomeController as controller'>
+        
+        <h1>{{controller.Title}}</h1>
+        <p style='color: red' ng-show='controller.ErrorMessage'>{{controller.ErrorMessage}}</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style='min-width: 80px;'>First name</th>
+                    <th style='min-width: 80px;'>Last name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='contact in controller.Contacts'>
+                    <td>{{contact.FirstName}}</td>
+                    <td>{{contact.LastName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+
+<script type='text/javascript' src='node_modules/angular/angular.js'></script>
+<script type='text/javascript' src='../app/app.js'></script>
+
+</html>

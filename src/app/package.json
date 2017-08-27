@@ -1,17 +1,18 @@
 {
-    "name": "aloe",
-    "version": "0.0.1",
-    "description": "",
-    "author": "Andrew Roberts",
-    "repository": "",
-    "main": "main.js",
-    "devDependencies": {
-        "electron": "^1.4.1"
-    },
-    "dependencies": {
-        "angular":"^1.6.5"
-    },
-    "scripts": {
-        "start": "electron ."
-    }
+  "name": "aloe",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Andrew Roberts",
+  "repository": "",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "angular": "^1.6.5"
+  },
+  "scripts": {
+    "start": "electron .",
+    "sass": "sass assets/materialize-src/sass/materialize.scss:assets/css/materialize.css & rsync -a assets/materialize-src/fonts assets/ & rsync -a assets/materialize-src/js assets/"
+  }
 }
