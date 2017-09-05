@@ -38,7 +38,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({width: width, height: height});
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
+        pathname: path.join(__dirname, 'Views/index.html'),
         protocol: 'file:',
         slashes: true
     }));

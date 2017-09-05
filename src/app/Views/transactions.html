@@ -5,7 +5,7 @@
 <head>
     <meta charset='UTF-8'>
 
-    <link type='text/css' rel='stylesheet' href='assets/css/materialize.css' media='screen,projection'/>
+    <link type='text/css' rel='stylesheet' href='../assets/css/materialize.css' media='screen,projection'/>
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
 
@@ -14,7 +14,7 @@
 
 <body>  
 
-    <ng-include src="'Components/navbar.html'"></ng-include>
+    <ng-include src="'../Components/navbar.html'"></ng-include>
     <div class='container' ng-controller='TransactionsController as controller'>
         
         <h1>{{controller.Title}}</h1>
@@ -34,9 +34,9 @@
     </div>
 </body>
 
-<script type='text/javascript' src='node_modules/angular/angular.js'></script>
-<script type='text/javascript' src='app.js'></script>
+<script type='text/javascript' src='../node_modules/angular/angular.js'></script>
+<script type='text/javascript' src='../app.js'></script>
 
-<ng-include src="'Components/scripts.html'"></ng-include>
+<ng-include src="'../Components/scripts.html'"></ng-include>
 
 </html>

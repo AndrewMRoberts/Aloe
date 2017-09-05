@@ -1,11 +1,12 @@
 'use strict';
 
 var path = require('path');
+var requireDir = require('require-dir');
 
 var app = angular.module('Aloe', []);
 
-require(path.join(__dirname, 'controllers.js'));
-require(path.join(__dirname, 'services.js'));
+requireDir(path.join(__dirname, '../Controllers'));
+requireDir(path.join(__dirname, '../Services'));
 
 document.addEventListener('DOMContentLoaded', function() {
     angular.bootstrap(document, ['Aloe']);
