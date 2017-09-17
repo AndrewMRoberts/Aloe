@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Data.Sqlite;
 
-namespace aloe.DataAccess
+namespace api.DataAccess
 {
     public class Database 
     {
@@ -10,7 +10,9 @@ namespace aloe.DataAccess
         public Database() 
         {
             using (_connection = new SqliteConnection(
-                new SqliteConnectionStringBuilder("aloe.db").ToString()
+                new SqliteConnectionStringBuilder() {
+                    DataSource = @"/home/andrew/Dev/Aloe/src/api/DataAccess/aloe"
+                }.ToString()
             ))
             {
                 _connection.Open();
@@ -27,14 +29,20 @@ namespace aloe.DataAccess
                 var selectCommand = _connection.CreateCommand();
                 selectCommand.Transaction = transaction;
                 selectCommand.CommandText = "SELECT IsInit FROM DbInit";
-                using (var reader = selectCommand.ExecuteReader()) {
-                    var initialized = false;
-                    if (reader.HasRows) {
-                        initialized = true;
+                try {
+                    using (var reader = selectCommand.ExecuteReader()) {
+                        var initialized = false;
+                        if (reader.HasRows) {
+                            initialized = true;
+                        }
+                        transaction.Commit();
+                        return initialized;
                     }
-                    transaction.Commit();
+                } catch (SqliteException e) {
+                    var initialized = false;
                     return initialized;
                 }
+                
             };
         }
 

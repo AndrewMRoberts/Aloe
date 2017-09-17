@@ -15,7 +15,7 @@
 <body>  
 
     <ng-include src="'../Components/navbar.html'"></ng-include>
-    <div class='container' ng-controller='HomeController as controller'>
+    <div class='container' ng-controller='OverviewController as controller'>
         
         <h1>{{controller.Title}}</h1>
         <p style='color: red' ng-show='controller.ErrorMessage'>{{controller.ErrorMessage}}</p>

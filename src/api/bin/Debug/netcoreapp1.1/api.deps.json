@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "a5bb1cb3f9c1014917a0daf372cdbdf7b6c06e4e"
+    "signature": "525508ff56a16a98745a7cbb8de120f5214d9bae"
   },
   "compilationOptions": {},
   "targets": {
@@ -10,7 +10,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.1.0",
           "Microsoft.AspNetCore.Routing": "1.1.0",
-          "Microsoft.AspNetCore.Server.Kestrel": "1.1.0"
+          "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
+          "Microsoft.Data.Sqlite": "1.0.0"
         },
         "runtime": {
           "api.dll": {}
@@ -385,6 +386,15 @@
           "lib/netstandard1.3/Microsoft.AspNetCore.WebUtilities.dll": {}
         }
       },
+      "microsoft.data.sqlite/1.0.0": {
+        "dependencies": {
+          "SQLite": "3.12.2",
+          "System.Data.Common": "4.1.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.Data.Sqlite.dll": {}
+        }
+      },
       "microsoft.dotnet.platformabstractions/1.1.0": {
         "runtime": {
           "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll": {}
@@ -573,6 +583,31 @@
           "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
+      "sqlite/3.12.2": {
+        "dependencies": {
+          "SQLite.Native": "3.12.2"
+        }
+      },
+      "sqlite.native/3.12.2": {
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libsqlite3.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libsqlite3.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/win7-x64/native/sqlite3.dll": {
+            "rid": "win7-x64",
+            "assetType": "native"
+          },
+          "runtimes/win7-x86/native/sqlite3.dll": {
+            "rid": "win7-x86",
+            "assetType": "native"
+          }
+        }
+      },
       "system.collections.nongeneric/4.3.0": {
         "runtime": {
           "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
@@ -599,6 +634,11 @@
         },
         "runtime": {
           "lib/netstandard1.5/System.ComponentModel.TypeConverter.dll": {}
+        }
+      },
+      "system.data.common/4.1.0": {
+        "runtime": {
+          "lib/netstandard1.2/System.Data.Common.dll": {}
         }
       },
       "system.diagnostics.contracts/4.3.0": {
@@ -891,6 +931,13 @@
       "path": "microsoft.aspnetcore.webutilities/1.1.0",
       "hashPath": "microsoft.aspnetcore.webutilities.1.1.0.nupkg.sha512"
     },
+    "microsoft.data.sqlite/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dezlCGK9zVrPNfoX1SL50GmWDdRQNcV1SBy3wuCn/a0g7Gc26PyvlA4BKapjnCK5N8LSQ2+1PdW2imiRr+YvxA==",
+      "path": "microsoft.data.sqlite/1.0.0",
+      "hashPath": "microsoft.data.sqlite.1.0.0.nupkg.sha512"
+    },
     "microsoft.dotnet.platformabstractions/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -1066,6 +1113,20 @@
       "path": "newtonsoft.json/9.0.1",
       "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
     },
+    "sqlite/3.12.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XYNQJt2eFqGluWP+fDaiNrV1v3kA+VsU2ygUjLx7zqzhIZKlAjSYMZLldmbGNnlNC5rKR+0LTrN0IA9dZkDyFw==",
+      "path": "sqlite/3.12.2",
+      "hashPath": "sqlite.3.12.2.nupkg.sha512"
+    },
+    "sqlite.native/3.12.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/5BdEFTaCziE6K5OG0bjSUhPo+LRmFcmyriFWEZNSuHaiqSp69sVngTb/Yo8mH6JykMA79BFdCBLMW+2E3pnuA==",
+      "path": "sqlite.native/3.12.2",
+      "hashPath": "sqlite.native.3.12.2.nupkg.sha512"
+    },
     "system.collections.nongeneric/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1093,6 +1154,13 @@
       "sha512": "sha512-hc+TYytDpsKMrWgQ/46FKQ0RXfrzT8XKFTtSQD9tifqPdj9BJV36Y/Y5AXTb1AaYRN8+BFpeuwCpACL4hAfmpQ==",
       "path": "system.componentmodel.typeconverter/4.3.0",
       "hashPath": "system.componentmodel.typeconverter.4.3.0.nupkg.sha512"
+    },
+    "system.data.common/4.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Fhim67Vg18ctd3ZJnkA239LHBk0BIXzAEfYzcrDST3eVUKhIRDf+wMvrdGcP20gAn4dgVVqAkFXimCoeTmIlzg==",
+      "path": "system.data.common/4.1.0",
+      "hashPath": "system.data.common.4.1.0.nupkg.sha512"
     },
     "system.diagnostics.contracts/4.3.0": {
       "type": "package",

@@ -1,11 +1,11 @@
-app.controller('HomeController', function(ContactsService) {
+app.controller('OverviewController', function(OverviewService) {
     var controller = this;
     controller.Title = 'Overview';
 
     LoadContacts();
 
     function LoadContacts() {
-        ContactsService.Get()
+        OverviewService.Get()
             .then(function(contacts) {
                 controller.Contacts = contacts;
             }, function(error) {
