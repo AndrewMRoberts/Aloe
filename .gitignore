@@ -1,7 +1,6 @@
-.vscode/
-src/api/bin/
-src/api/bin/*
-src/api/obj/
+.vscode
+src/api/bin
+src/api/obj
 
 src/app/node_modules
 
