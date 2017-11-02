@@ -62,6 +62,10 @@ function startApi() {
             createWindow();
         }
     });
+
+    if (mainWindow == null) {
+        createWindow();
+    }
 }
 
 function writeLog(msg) {

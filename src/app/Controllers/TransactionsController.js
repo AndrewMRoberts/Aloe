@@ -1,4 +1,4 @@
-app.controller('TransactionsController', function(TransactionService) {
+app.controller('TransactionsController', ['$scope', function($scope, TransactionService) {
     var controller = this;
     controller.Title = 'Transactions';
 
@@ -12,4 +12,9 @@ app.controller('TransactionsController', function(TransactionService) {
                 controller.ErrorMessage = error;
             });
     }
-});
+
+    $scope.sortBy = function(sortParameter) {
+        $scope.reverse = $scope.sortParameter === sortParameter ? !$scope.reverse : false;
+        $scope.sortParameter = sortParameter;
+    };
+}]);

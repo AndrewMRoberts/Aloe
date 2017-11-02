@@ -6,6 +6,7 @@
     <meta charset='UTF-8'>
 
     <link type='text/css' rel='stylesheet' href='../assets/css/materialize.css' media='screen,projection'/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
 
@@ -22,12 +23,18 @@
         <table>
             <thead>
                 <tr>
-                    <th style='min-width: 80px;'>Transaction name</th>
+                    <th style='min-width: 80px;'>Transaction Date</th>
+                    <th style='min-width: 80px;'>Description</th>
+                    <th style='min-width: 80px;'>Category</th>
+                    <th style='min-width: 80px;'>Amount</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='trn in controller.Transactions'>
-                    <td>{{trn.Name}}</td>
+                <tr ng-repeat='trn in controller.Transactions | orderBy:sortParameter:reverseSort'>
+                    <td>{{trn.EffectiveDate}}</td>
+                    <td>{{trn.Description}}</td>
+                    <td>{{trn.Category}}</td>
+                    <td>{{trn.Amount}}</td>
                 </tr>
             </tbody>
         </table>

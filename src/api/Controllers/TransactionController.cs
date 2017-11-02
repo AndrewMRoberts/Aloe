@@ -14,8 +14,7 @@ namespace api.Controllers
             var db = new Database();
 
             var result = new [] {
-                new { FirstName = "Jimmy", LastName = "Bob"},
-                new { FirstName = "Mike", LastName = "Krcynzski"}
+                new { EffectiveDate = "10/7/2017", Description = "Wedding", Category = "Personal", Amount = 250.00}
             };
 
             return Ok(result);
