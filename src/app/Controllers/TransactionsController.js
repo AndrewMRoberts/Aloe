@@ -1,6 +1,8 @@
-app.controller('TransactionsController', ['$scope', function($scope, TransactionService) {
+app.controller('TransactionsController', ['$scope', 'TransactionService', function($scope, TransactionService) {
     var controller = this;
     controller.Title = 'Transactions';
+    $scope.sortParameter = 'EffectiveDate';
+    $scope.columnSearchText = 'Search Column';
 
     LoadTransactions();
 
@@ -14,7 +16,7 @@ app.controller('TransactionsController', ['$scope', function($scope, Transaction
     }
 
     $scope.sortBy = function(sortParameter) {
-        $scope.reverse = $scope.sortParameter === sortParameter ? !$scope.reverse : false;
+        $scope.reverseSort = $scope.sortParameter === sortParameter ? !$scope.reverseSort : false;
         $scope.sortParameter = sortParameter;
     };
 }]);

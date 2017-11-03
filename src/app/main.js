@@ -31,7 +31,9 @@ app.on('activate', function() {
 
 process.on('exit', function() {
     writeLog('exit');
-    apiProcess.kill();
+    if (apiProcess) {
+        apiProcess.kill();
+    }
 });
 
 function createWindow() {
@@ -52,16 +54,16 @@ function createWindow() {
 
 function startApi() {
     var process = proc.spawn;
-    var apiPath = path.join(__dirname, '../api/bin/Debug/netcoreapp1.1/ubuntu.16.04-x64/api');
+    // var apiPath = path.join(__dirname, '../api/bin/Debug/netcoreapp1.1/api.dll');
 
-    apiProcess = process(apiPath);
+    // apiProcess = process(apiPath);
 
-    apiProcess.stdout.on('data', (data) => {
-        writeLog('stdout: $(data)');
-        if (mainWindow == null) {
-            createWindow();
-        }
-    });
+    // apiProcess.stdout.on('data', (data) => {
+    //     writeLog('stdout: $(data)');
+    //     if (mainWindow == null) {
+    //         createWindow();
+    //     }
+    // });
 
     if (mainWindow == null) {
         createWindow();
