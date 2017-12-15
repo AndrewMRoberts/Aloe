@@ -11,7 +11,8 @@ namespace api.DataAccess
         {
             using (_connection = new SqliteConnection(
                 new SqliteConnectionStringBuilder() {
-                    DataSource = @"/home/andrew/Dev/Aloe/src/api/DataAccess/aloe"
+                    // DataSource = @"/home/andrew/Dev/Aloe/src/api/DataAccess/aloe"
+                    DataSource = @"C:\Users\Andrew\Development\Aloe\src\api\DataAccess\aloe"
                 }.ToString()
             ))
             {
@@ -46,6 +47,41 @@ namespace api.DataAccess
             };
         }
 
+        public bool IsTableInitialized(string tableName) {
+            using (var transaction = _connection.BeginTransaction())
+            {
+                var createCommand = _connection.CreateCommand();
+                createCommand.Transaction = transaction;
+                createCommand.CommandText = 
+                @"SELECT 
+                    * 
+                FROM 
+                    InitializedTable 
+                WHERE 
+                    Name = @TableName";
+                createCommand.Parameters.Add(new SqliteParameter("@TableName", tableName));
+                var reader = createCommand.ExecuteReader();
+                return reader.HasRows;
+            }
+        }
+
+        public void SetTableInitialized(string tableName) {
+            using (var transaction = _connection.BeginTransaction())
+            {
+                var createCommand = _connection.CreateCommand();
+                createCommand.Transaction = transaction;
+                createCommand.CommandText = 
+                @"INSERT INTO InitializedTable (Name)
+                VALUES (@TableName)";
+                createCommand.Parameters.Add(new SqliteParameter("@TableName", tableName));
+                createCommand.ExecuteNonQuery();
+            }
+        }
+
+        public SqliteConnection GetConnection() {
+            return _connection;
+        }
+
         private void InitializeDatabase() {
             using (var transaction = _connection.BeginTransaction())
             {
@@ -64,6 +100,15 @@ namespace api.DataAccess
                 ";
                 insertCommand.Parameters.AddWithValue("$IsInit", true);
                 insertCommand.ExecuteNonQuery();
+
+                var createInitTableCommand = _connection.CreateCommand();
+                createInitTableCommand.Transaction = transaction;
+                createInitTableCommand.CommandText = 
+                @"CREATE TABLE InitializedTable (
+                    Id int primary key AUTOINCREMENT not null,
+                    Name varchar(50) not null
+                )";
+                createInitTableCommand.ExecuteNonQuery();
 
                 transaction.Commit();
             }
