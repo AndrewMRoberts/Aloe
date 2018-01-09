@@ -12,23 +12,18 @@
     <title>Aloe</title>
 </head>
 
-<body>  
+<body>
 
     <ng-include src="'../Components/navbar.html'"></ng-include>
 
 </body>
-
-<script type='text/javascript' src='../node_modules/angular/angular.js'></script>
-<script type='text/javascript' src='../app.js'></script>
-
-<ng-include src="'../Components/scripts.html'"></ng-include>
 
 <div class='container' ng-controller='SettingsController as controller'>
     <div class='row'>
         <div class='col s12'>
             <div class='card'>
                 <div class='card-image'>
-                    <a class='btn-floating halfway-fab btn-large waves-effect waves-light deep-orange accent-2'><i class='material-icons'>add</i></a>
+                    <a class='btn-floating halfway-fab btn-large waves-effect waves-light deep-orange accent-2 modal-trigger' href='#createAccount'><i class='material-icons'>add</i></a>
                     <div class='green lighten-1' style='height:100px'></div>
                     <span class='card-title'>Accounts</span>
                 </div>
@@ -46,6 +41,27 @@
             </div>
         </div>
     </div>
+
+    <div id='createAccount' class='modal'>
+        <div class='modal-content'>
+            TEST TEST TEST TEST
+        </div>
+        <div class='modal-footer'>
+
+        </div>
+    </div>
 </div>
+
+<script type='text/javascript' src='../node_modules/angular/angular.js'></script>
+<script type='text/javascript' src='../app.js'></script>
+<script>window.$ = window.jQuery = require('jquery');</script>
+<script>window.Hammer = require('hammerjs');</script>
+<script type="text/javascript" src="../assets/js/materialize.js"></script>
+
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+</script>
 
 </html>

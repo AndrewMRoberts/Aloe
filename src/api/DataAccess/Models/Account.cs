@@ -9,7 +9,7 @@ namespace api.DataAccess
 
         public bool HasWhereClause() 
         {
-            return Id != 0 || string.IsNullOrWhiteSpace(Name);
+            return Id != 0 || !string.IsNullOrWhiteSpace(Name);
         }
     }
 }

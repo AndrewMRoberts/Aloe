@@ -12,4 +12,8 @@ app.controller('SettingsController', ['$scope', 'AccountService', function($scop
                 controller.ErrorMessage = error;
             });
     }
+
+    $scope.CreateAccount = function() {
+        console.log('CREATE ACCOUNT');
+    }
 }]);

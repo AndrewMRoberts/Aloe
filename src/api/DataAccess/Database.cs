@@ -43,7 +43,6 @@ namespace api.DataAccess
                     var initialized = false;
                     return initialized;
                 }
-                
             };
         }
 
@@ -75,6 +74,8 @@ namespace api.DataAccess
                 VALUES (@TableName)";
                 createCommand.Parameters.Add(new SqliteParameter("@TableName", tableName));
                 createCommand.ExecuteNonQuery();
+
+                transaction.Commit();
             }
         }
 
@@ -105,7 +106,7 @@ namespace api.DataAccess
                 createInitTableCommand.Transaction = transaction;
                 createInitTableCommand.CommandText = 
                 @"CREATE TABLE InitializedTable (
-                    Id int primary key AUTOINCREMENT not null,
+                    Id INTEGER PRIMARY KEY,
                     Name varchar(50) not null
                 )";
                 createInitTableCommand.ExecuteNonQuery();

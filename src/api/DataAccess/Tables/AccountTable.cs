@@ -15,6 +15,7 @@ namespace api.DataAccess.Tables
         {
             var database = new Database();
             _connection = database.GetConnection();
+            _connection.Open();
 
             if (!database.IsTableInitialized(TableName)) {
                 using (var transaction = _connection.BeginTransaction()) {
@@ -22,10 +23,11 @@ namespace api.DataAccess.Tables
                     createCommand.Transaction = transaction;
                     createCommand.CommandText = 
                     @"CREATE TABLE Account (
-                        Id int primary key AUTOINCREMENT not null,
+                        Id int primary key,
                         Name varchar(50) not null
                     )";
                     createCommand.ExecuteNonQuery();
+                    transaction.Commit();
 
                     database.SetTableInitialized(TableName);
                 }
@@ -34,6 +36,7 @@ namespace api.DataAccess.Tables
 
         public Dictionary<int, Account> Select(Account options = null) 
         {
+            options = options ?? new Account();
             var retAccounts = new Dictionary<int, Account>();
 
             using (var transaction = _connection.BeginTransaction()) 
