@@ -23,8 +23,10 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create() 
+        public IActionResult Create(string name) 
         {
+            var table = new AccountTable();
+            table.Insert(new DataAccess.Account() {Name = name});
             return Ok(null);
         }
     }

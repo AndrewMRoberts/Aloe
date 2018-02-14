@@ -1,44 +1,42 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang='en'>
+  
 <head>
-    <meta charset='UTF-8'>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 
-    <link type='text/css' rel='stylesheet' href='../assets/css/materialize.css' media='screen,projection'/>
+    <title>Overview</title>
 
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='../Styles/app.css'>
+  </head>
 
-    <title>Aloe</title>
-</head>
+  <body>
+    <nav class='navbar navbar-toggleable-md navbar-light bg-faded'>
+        <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse' data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class='navbar-brand' href='#'>
+            <!-- Include img here -->
+            Aloe
+        </a>
+        <div class='collapse navbar-collapse' id='navbar'>
+            <div class='navbar-nav'>
+                <a class='nav-item nav-link active' href='#'>Home</a>
+                <a class='nav-item nav-link' href='settings.html'>Settings</a>
+            </div>
+        </div>
+    </nav>
 
-<body>  
-
-    <ng-include src="'../Components/navbar.html'"></ng-include>
-    <div class='container' ng-controller='OverviewController as controller'>
-
-        <ng-include src="'../Components/updateTransactions.html'"></ng-include>
-        
-        <h1>{{controller.Title}}</h1>
-        <p style='color: red' ng-show='controller.ErrorMessage'>{{controller.ErrorMessage}}</p>
-        <table>
-            <thead>
-                <tr>
-                    <th style='min-width: 80px;'>First name</th>
-                    <th style='min-width: 80px;'>Last name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat='contact in controller.Contacts'>
-                    <td>{{contact.FirstName}}</td>
-                    <td>{{contact.LastName}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class='container'>
+        OVERVIEW
     </div>
-</body>
 
-<script type='text/javascript' src='../node_modules/angular/angular.js'></script>
-<script type='text/javascript' src='../app.js'></script>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src='https://code.jquery.com/jquery-3.1.1.slim.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
+    <script>if (window.module) module = window.module;</script>
+  </body>
 
 </html>

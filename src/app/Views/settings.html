@@ -1,67 +1,91 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang='en'>
+  
 <head>
-    <meta charset='UTF-8'>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-sacle=1, shrink-to-fit=no'>
 
-    <link type='text/css' rel='stylesheet' href='../assets/css/materialize.css' media='screen,projection'/>
+    <title>Overview</title>
 
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='../Styles/app.css'>
+  </head>
 
-    <title>Aloe</title>
-</head>
+  <body>
+    <nav class='navbar navbar-toggleable-md navbar-light bg-faded'>
+        <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse' data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class='navbar-brand' href='#'>
+            <!-- Include img here -->
+            Aloe
+        </a>
+        <div class='collapse navbar-collapse' id='navbar'>
+            <div class='navbar-nav'>
+                <a class='nav-item nav-link' href='overview.html'>Home</a>
+                <a class='nav-item nav-link active' href='#'>Settings</a>
+            </div>
+        </div>
+    </nav>
 
-<body>
+    <div class='container'>
+        <h1>Settings</h1>
 
-    <ng-include src="'../Components/navbar.html'"></ng-include>
+        <div class='card'>
+            <h4 class='card-header'>
+                Accounts
+                <button type='button' class='btn btn-primary float-right' data-toggle='modal' data-target='#addAccountModal'>Add</button>
+            </h4>
+            <ul class='list-group list-group-flush' id='accounts'>
+            </ul>
+        </div>
 
-</body>
-
-<div class='container' ng-controller='SettingsController as controller'>
-    <div class='row'>
-        <div class='col s12'>
-            <div class='card'>
-                <div class='card-image'>
-                    <a class='btn-floating halfway-fab btn-large waves-effect waves-light deep-orange accent-2 modal-trigger' href='#createAccount'><i class='material-icons'>add</i></a>
-                    <div class='green lighten-1' style='height:100px'></div>
-                    <span class='card-title'>Accounts</span>
-                </div>
-                <div class='card-content'>
-                    <table class='highlight'>
-                        <tbody>
-                            <tr ng-repeat='Account in Accounts'>
-                                <td>
-                                    {{Account.Name}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class='modal fade' id='addAccountModal' tabindex='-1' role='dialog' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h3 class='modal-title'>Add Account</h3>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>
+                        <form id='account-form'>
+                            <div class='form-group'>
+                                <label for='enter-account'>Account Name</label>
+                                <input type='text' class='form-control' id='enter-account' placeholder='Enter Name'/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                        <button type='button' id='save' class='btn btn-primary'>Save</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id='createAccount' class='modal'>
-        <div class='modal-content'>
-            TEST TEST TEST TEST
-        </div>
-        <div class='modal-footer'>
+    <script type='text/javascript'>window.$ = window.jQuery = require('jquery');</script>
+    <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
 
-        </div>
-    </div>
-</div>
+    <script type='text/javascript'>
+        $(function() {
+            $.get('http://localhost:5000/api/account', function(accounts) {
+                $(accounts).each(function(index, account) {
+                    $('#accounts').append('<li class="list-group-item">'+account.Name+'</li>');
+                });
+            });
 
-<script type='text/javascript' src='../node_modules/angular/angular.js'></script>
-<script type='text/javascript' src='../app.js'></script>
-<script>window.$ = window.jQuery = require('jquery');</script>
-<script>window.Hammer = require('hammerjs');</script>
-<script type="text/javascript" src="../assets/js/materialize.js"></script>
-
-<script type='text/javascript'>
-    $(document).ready(function() {
-        $('.modal').modal();
-    });
-</script>
+            $('#save').click(function() {
+                $.post('http://localhost:5000/api/account/Create', { name: $('#enter-account').val()}, function() {
+                    $('.modal').modal('hide');
+                });
+            })
+        });
+    </script>
+  </body>
 
 </html>
