@@ -14,22 +14,21 @@ namespace api.DataAccess.Tables
         public void Initialize() 
         {
             var database = new Database();
-            _connection = database.GetConnection();
-            _connection.Open();
+            using (_connection = database.GetConnection()) {
+                if (!database.IsTableInitialized(TableName)) {
+                    using (var transaction = _connection.BeginTransaction()) {
+                        var createCommand = _connection.CreateCommand();
+                        createCommand.Transaction = transaction;
+                        createCommand.CommandText = 
+                        @"CREATE TABLE Account (
+                            Id INTEGER PRIMARY KEY autoincrement,
+                            Name varchar(50) not null
+                        )";
+                        createCommand.ExecuteNonQuery();
+                        transaction.Commit();
 
-            if (!database.IsTableInitialized(TableName)) {
-                using (var transaction = _connection.BeginTransaction()) {
-                    var createCommand = _connection.CreateCommand();
-                    createCommand.Transaction = transaction;
-                    createCommand.CommandText = 
-                    @"CREATE TABLE Account (
-                        Id int primary key,
-                        Name varchar(50) not null
-                    )";
-                    createCommand.ExecuteNonQuery();
-                    transaction.Commit();
-
-                    database.SetTableInitialized(TableName);
+                        database.SetTableInitialized(TableName);
+                    }
                 }
             }
         }
@@ -39,54 +38,74 @@ namespace api.DataAccess.Tables
             options = options ?? new Account();
             var retAccounts = new Dictionary<int, Account>();
 
-            using (var transaction = _connection.BeginTransaction()) 
-            {
-                var selectCommand = _connection.CreateCommand();
-                selectCommand.Transaction = transaction;
-                selectCommand.CommandText = @"SELECT * FROM Account";
+            var database = new Database();
+            using (_connection = database.GetConnection()) {
+                _connection.Open();
+                using (var selectCommand = _connection.CreateCommand()) {
+                    selectCommand.CommandText = @"SELECT * FROM Account";
 
-                if (options.HasWhereClause()) {
-                    var needAnd = false;
-                    selectCommand.CommandText += @" WHERE ";
+                    if (options.HasWhereClause()) {
+                        var needAnd = false;
+                        selectCommand.CommandText += @" WHERE ";
 
-                    if (options.Id != 0) {
-                        AddWhereClauseParameter(selectCommand, 
-                            new KeyValuePair<string, string>("Id", options.Id.ToString()), needAnd);
-                        needAnd = true;
+                        if (options.Id != 0) {
+                            AddWhereClauseParameter(selectCommand, 
+                                new KeyValuePair<string, string>("Id", options.Id.ToString()), needAnd);
+                            needAnd = true;
+                        }
+                        if (string.IsNullOrWhiteSpace(options.Name)) {
+                            AddWhereClauseParameter(selectCommand,
+                                new KeyValuePair<string, string>("Name", options.Name), needAnd);
+                            needAnd = true;
+                        }
                     }
-                    if (string.IsNullOrWhiteSpace(options.Name)) {
-                        AddWhereClauseParameter(selectCommand,
-                            new KeyValuePair<string, string>("Name", options.Name), needAnd);
-                        needAnd = true;
+
+                    using (var reader = selectCommand.ExecuteReader()) {
+                        while (reader.Read()) {
+                            var obj = new Account {
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1)
+                            };
+                            retAccounts.Add(obj.Id, obj);
+                        }
+
+                        return retAccounts;
                     }
                 }
-
-                var reader = selectCommand.ExecuteReader();
-                while (reader.Read()) {
-                    var obj = new Account {
-                        Id = reader.GetInt32(0),
-                        Name = reader.GetString(1)
-                    };
-                    retAccounts.Add(obj.Id, obj);
-                }
-
-                return retAccounts;
             }
         }
 
         public void Insert(Account obj) 
         {
-             using (var transaction = _connection.BeginTransaction()) 
-            {
-                var insertCommand = _connection.CreateCommand();
-                insertCommand.Transaction = transaction;
-                insertCommand.CommandText = 
-                    @"INSERT (Id, Name) INTO Account VALUES (@Id, @Name)";
+            var database = new Database();
+            using (_connection = database.GetConnection()) {
+                _connection.Open();
+                using (var insertCommand = _connection.CreateCommand()) 
+                {
+                    insertCommand.CommandText = 
+                        @"INSERT INTO Account (Name) VALUES (@Name)";
 
-                insertCommand.Parameters.Add(new SqliteParameter("@Id", obj.Id));
-                insertCommand.Parameters.Add(new SqliteParameter("@Name", obj.Name));
+                    insertCommand.Parameters.Add(new SqliteParameter("@Name", obj.Name));
 
-                insertCommand.ExecuteNonQuery();
+                    insertCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Remove(int id) 
+        {
+            var database = new Database();
+            using (_connection = database.GetConnection()) {
+                _connection.Open();
+                using (var deleteCommand = _connection.CreateCommand()) 
+                {
+                    deleteCommand.CommandText = 
+                        @"DELETE FROM Account WHERE Id = @Id";
+
+                    deleteCommand.Parameters.Add(new SqliteParameter("@Id", id));
+
+                    deleteCommand.ExecuteNonQuery();
+                }
             }
         }
 

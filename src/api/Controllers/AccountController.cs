@@ -7,10 +7,11 @@ using api.DataAccess.Tables;
 
 namespace api.Controllers
 {
-    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         [HttpGet]
+        [Route("api/[controller]")]
+        [Route("api/[controller]/Get")]
         public IActionResult Get()
         {
             var accountDataTable = new AccountTable();
@@ -23,10 +24,23 @@ namespace api.Controllers
         }
 
         [HttpPost]
+        [Route("api/[controller]/create")]
         public IActionResult Create(string name) 
         {
             var table = new AccountTable();
+            table.Initialize();
             table.Insert(new DataAccess.Account() {Name = name});
+            return Ok(null);
+        }
+
+        [HttpPost]
+        [Route("api/[controller]/remove")]
+        public IActionResult Remove(int id) 
+        {
+            var table = new AccountTable();
+            table.Initialize();
+            table.Remove(id);
+
             return Ok(null);
         }
     }

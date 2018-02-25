@@ -3,7 +3,7 @@
   
 <head>
     <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-sacle=1, shrink-to-fit=no'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 
     <title>Overview</title>
 
@@ -24,6 +24,7 @@
             <div class='navbar-nav'>
                 <a class='nav-item nav-link' href='overview.html'>Home</a>
                 <a class='nav-item nav-link active' href='#'>Settings</a>
+                <a class='nav-item nav-link active' href='transactions.html'>Transactions</a>
             </div>
         </div>
     </nav>
@@ -73,18 +74,41 @@
 
     <script type='text/javascript'>
         $(function() {
-            $.get('http://localhost:5000/api/account', function(accounts) {
-                $(accounts).each(function(index, account) {
-                    $('#accounts').append('<li class="list-group-item">'+account.Name+'</li>');
-                });
-            });
+            populateAccountList();
 
             $('#save').click(function() {
-                $.post('http://localhost:5000/api/account/Create', { name: $('#enter-account').val()}, function() {
+                $.post('http://localhost:5000/api/account/create', { name: $('#enter-account').val()}, function() {
                     $('.modal').modal('hide');
+                    populateAccountList();
                 });
             })
         });
+
+        function populateAccountList() {
+            $.get('http://localhost:5000/api/account', function(accounts) {
+                $('#accounts').empty();
+                $(accounts).each(function(index, account) {
+                    $('#accounts').append(
+                        '<li id="account' + account.Id + '" class="list-group-item"> \
+                            <div style="width:100%">' 
+                                + account.Name +
+                                '<span style="float:right; cursor:pointer;" onclick="removeAccount(this)"> \
+                                    &times; \
+                                </span> \
+                            </div> \
+                        </li>'
+                    );
+                });
+            });
+        }
+
+        function removeAccount(element) {
+            var accountId = $(element).parent().parent()[0].id.split('account')[1];
+            $.post('http://localhost:5000/api/account/remove', { id: accountId }, function() {
+                $(element).parent().parent().remove();
+            });
+        }
+
     </script>
   </body>
 

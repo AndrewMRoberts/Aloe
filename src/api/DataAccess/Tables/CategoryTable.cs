@@ -10,6 +10,10 @@ namespace api.DataAccess.Tables
             throw new NotImplementedException();
         }
 
+        public void Close() {
+            throw new NotImplementedException();
+        }
+
         public bool IsInitialized() 
         {
             throw new NotImplementedException();
