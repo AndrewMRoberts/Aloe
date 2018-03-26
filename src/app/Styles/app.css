@@ -1,3 +1,15 @@
 .container {
     margin-top: 20px;
 }
+
+.btn {
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+}
+
+.col-hover {
+    background-color: yellow;
+}
