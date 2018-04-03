@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using api.DataAccess;
+using api.DataAccess.Tables;
 
 namespace api.Controllers
 {
@@ -17,18 +18,10 @@ namespace api.Controllers
         [Route("api/[controller]")]
         public IActionResult Get()
         {
-            // var db = new Database();
+            var transactionTable = new TransactionTable();
+            var transactions = transactionTable.Select();
 
-            var result = new [] {
-                new { EffectiveDate = "10/7/2017", Account = "Discover", Description = "Wedding", Category = "Personal", Amount = 250.00},
-                new { EffectiveDate = "10/1/2017", Account = "RCU", Description = "Rent", Category = "Rent", Amount = 1600.00},
-                new { EffectiveDate = "10/7/2017", Account = "Discover", Description = "Wedding", Category = "Personal", Amount = 250.00},
-                new { EffectiveDate = "10/1/2017", Account = "RCU", Description = "Rent", Category = "Rent", Amount = 1600.00},
-                new { EffectiveDate = "10/7/2017", Account = "Discover", Description = "Wedding", Category = "Personal", Amount = 250.00},
-                new { EffectiveDate = "10/1/2017", Account = "RCU", Description = "Rent", Category = "Rent", Amount = 1600.00},
-                new { EffectiveDate = "10/7/2017", Account = "Discover", Description = "Wedding", Category = "Personal", Amount = 250.00},
-                new { EffectiveDate = "10/1/2017", Account = "RCU", Description = "Rent", Category = "Rent", Amount = 1600.00}
-            };
+            var result = transactions.Values.ToList();
 
             return Ok(result);
         }
@@ -66,13 +59,29 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("api/[controller]/uploadTransactions")]
-        public IActionResult UploadTransactions(string filePath, bool hasHeaderRow, Dictionary<string, int> selectedCols) 
+        public IActionResult UploadTransactions(string filePath, int account, bool hasHeaderRow, Dictionary<string, int> selectedCols) 
         {
             using(var fileStream = new FileStream(filePath, FileMode.Open)) {
                 using (var streamReader =  new StreamReader(fileStream)) {
+                    if (hasHeaderRow) {
+                        streamReader.ReadLine();
+                    }
+
                     var line = streamReader.ReadLine();
-                    if (line != null) {
-                        
+                    var transactionTable = new TransactionTable();
+                    while (line != null) {
+                        var columns = line.Split(',');
+                        var transaction = new Transaction() 
+                        {
+                            Amount = Convert.ToDecimal(columns[selectedCols["amount"]]),
+                            Description = columns[selectedCols["description"]],
+                            TransactionDate = Convert.ToDateTime(columns[selectedCols["date"]]),
+                            AccountId = account
+                        };
+
+                        transactionTable.Insert(transaction);
+
+                        line = streamReader.ReadLine();
                     }
                 }
             }

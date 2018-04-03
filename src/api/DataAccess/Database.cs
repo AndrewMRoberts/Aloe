@@ -1,4 +1,5 @@
 using System;
+using api.DataAccess.Tables;
 using Microsoft.Data.Sqlite;
 
 namespace api.DataAccess
@@ -74,7 +75,7 @@ namespace api.DataAccess
             _connection = new SqliteConnection(
                 new SqliteConnectionStringBuilder() {
                     // DataSource = @"/home/andrew/Dev/Aloe/src/api/DataAccess/aloe"
-                    DataSource = @"C:\Users\Andrew\Development\Aloe\src\api\DataAccess\aloe"
+                    DataSource = @"C:\Users\Andrew\Development\Aloe\src\api\DataAccess\aloe.db"
                 }.ToString()
             );
             return _connection;
@@ -113,6 +114,10 @@ namespace api.DataAccess
                     transaction.Commit();
                 }
             }
+
+            new AccountTable().Initialize();
+            new CategoryTable().Initialize();
+            new TransactionTable().Initialize();
         }
     }
 }

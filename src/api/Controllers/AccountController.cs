@@ -15,7 +15,6 @@ namespace api.Controllers
         public IActionResult Get()
         {
             var accountDataTable = new AccountTable();
-            accountDataTable.Initialize();
 
             var accounts = accountDataTable.Select();      
             var result = accounts.Values.ToList();
@@ -28,7 +27,6 @@ namespace api.Controllers
         public IActionResult Create(string name) 
         {
             var table = new AccountTable();
-            table.Initialize();
             table.Insert(new DataAccess.Account() {Name = name});
             return Ok(null);
         }
@@ -38,7 +36,6 @@ namespace api.Controllers
         public IActionResult Remove(int id) 
         {
             var table = new AccountTable();
-            table.Initialize();
             table.Remove(id);
 
             return Ok(null);

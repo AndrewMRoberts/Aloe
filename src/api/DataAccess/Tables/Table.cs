@@ -8,5 +8,6 @@ namespace api.DataAccess.Tables
     {
         void Initialize();
         Dictionary<int, T> Select(T options);
+        void Insert(T obj);
     }    
 }

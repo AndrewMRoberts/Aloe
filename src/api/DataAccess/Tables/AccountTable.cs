@@ -11,10 +11,15 @@ namespace api.DataAccess.Tables
 
         private SqliteConnection _connection;
 
+        public AccountTable() {
+            Initialize();
+        }
+
         public void Initialize() 
         {
             var database = new Database();
             using (_connection = database.GetConnection()) {
+                _connection.Open();
                 if (!database.IsTableInitialized(TableName)) {
                     using (var transaction = _connection.BeginTransaction()) {
                         var createCommand = _connection.CreateCommand();
@@ -22,7 +27,7 @@ namespace api.DataAccess.Tables
                         createCommand.CommandText = 
                         @"CREATE TABLE Account (
                             Id INTEGER PRIMARY KEY autoincrement,
-                            Name varchar(50) not null
+                            Name text not null
                         )";
                         createCommand.ExecuteNonQuery();
                         transaction.Commit();

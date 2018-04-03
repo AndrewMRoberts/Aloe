@@ -7,26 +7,31 @@ namespace api.DataAccess.Tables
 {
     public class TransactionTable : Table<Transaction>
     {
-        public readonly string TableName = "Transaction";
+        public readonly string TableName = "AloeTransaction";
 
         private SqliteConnection _connection;
+
+        public TransactionTable() {
+            Initialize();
+        }
 
         public void Initialize() 
         {
             var database = new Database();
             using (_connection = database.GetConnection()) {
+                _connection.Open();
                 if (!database.IsTableInitialized(TableName)) {
                     using (var transaction = _connection.BeginTransaction()) {
                         var createCommand = _connection.CreateCommand();
                         createCommand.Transaction = transaction;
                         createCommand.CommandText = 
-                        @"CREATE TABLE Transaction (
+                        @"CREATE TABLE " + TableName + @" (
                             Id INTEGER PRIMARY KEY autoincrement,
-                            Description NVARCHAR(max) not null,
+                            Description text not null,
                             Amount Decimal(18,2) not null,
-                            TransactionDate datetime2 not null,
-                            CategoryId int foreign key references Category(Id),
-                            AccountId int foreign key references Account(Id) not null                      
+                            TransactionDate datetime not null,
+                            CategoryId int references Category(Id),
+                            AccountId int references Account(Id) not null                      
                         )";
                         createCommand.ExecuteNonQuery();
                         transaction.Commit();
@@ -37,7 +42,7 @@ namespace api.DataAccess.Tables
             }
         }
 
-        public Dictionary<int, Transaction> Select(Transaction options) 
+        public Dictionary<int, Transaction> Select(Transaction options = null) 
         {
             options = options ?? new Transaction();
             var retAccounts = new Dictionary<int, Transaction>();
@@ -46,7 +51,15 @@ namespace api.DataAccess.Tables
             using (_connection = database.GetConnection()) {
                 _connection.Open();
                 using (var selectCommand = _connection.CreateCommand()) {
-                    selectCommand.CommandText = @"SELECT * FROM Transaction";
+                    selectCommand.CommandText = 
+                    @"SELECT 
+                        Id,
+                        Description,
+                        Amount,
+                        CategoryId,
+                        AccountId,
+                        TransactionDate
+                     FROM " + TableName;
 
                     if (options.HasWhereClause()) {
                         var needAnd = false;
@@ -99,6 +112,36 @@ namespace api.DataAccess.Tables
 
                         return retAccounts;
                     }
+                }
+            }
+        }
+
+        public void Insert(Transaction transaction) {
+            var database = new Database();
+            using (_connection = database.GetConnection()) {
+                _connection.Open();
+                using (var insertCommand = _connection.CreateCommand()) {
+                    insertCommand.CommandText = 
+                    @"INSERT INTO " + TableName + @" (
+                        Description,
+                        Amount,
+                        TransactionDate,
+                        CategoryId,
+                        AccountId
+                    ) VALUES (
+                        @Description,
+                        @Amount,
+                        @TransactionDate,
+                        @CategoryId,
+                        @AccountId
+                    )";
+                    insertCommand.Parameters.Add(new SqliteParameter("@Description", transaction.Description));
+                    insertCommand.Parameters.Add(new SqliteParameter("@Amount", transaction.Amount));
+                    insertCommand.Parameters.Add(new SqliteParameter("@TransactionDate", transaction.TransactionDate));
+                    insertCommand.Parameters.Add(new SqliteParameter("@CategoryId", transaction.CategoryId));
+                    insertCommand.Parameters.Add(new SqliteParameter("@AccountId", transaction.AccountId));
+
+                    insertCommand.ExecuteNonQuery();
                 }
             }
         }
