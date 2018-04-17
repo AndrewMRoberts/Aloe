@@ -7,7 +7,7 @@ namespace api.DataAccess.Tables
 {
     public class AccountTable : Table<Account>
     {
-        public readonly string TableName = "Account";
+        public readonly static string TableName = "Account";
 
         private SqliteConnection _connection;
 
@@ -27,7 +27,8 @@ namespace api.DataAccess.Tables
                         createCommand.CommandText = 
                         @"CREATE TABLE Account (
                             Id INTEGER PRIMARY KEY autoincrement,
-                            Name text not null
+                            Name text not null,
+                            IsCredit bit not null
                         )";
                         createCommand.ExecuteNonQuery();
                         transaction.Commit();
@@ -69,7 +70,8 @@ namespace api.DataAccess.Tables
                         while (reader.Read()) {
                             var obj = new Account {
                                 Id = reader.GetInt32(0),
-                                Name = reader.GetString(1)
+                                Name = reader.GetString(1),
+                                IsCredit = reader.GetBoolean(2)
                             };
                             retAccounts.Add(obj.Id, obj);
                         }
@@ -88,12 +90,14 @@ namespace api.DataAccess.Tables
                 using (var insertCommand = _connection.CreateCommand()) 
                 {
                     insertCommand.CommandText = 
-                        @"INSERT INTO Account (Name) VALUES (@Name)";
+                        @"INSERT INTO Account (Name, IsCredit) VALUES (@Name, @IsCredit)";
 
                     insertCommand.Parameters.Add(new SqliteParameter("@Name", obj.Name));
+                    insertCommand.Parameters.Add(new SqliteParameter("@IsCredit", obj.IsCredit));
 
                     insertCommand.ExecuteNonQuery();
                 }
+                _connection.Close();
             }
         }
 
@@ -111,6 +115,7 @@ namespace api.DataAccess.Tables
 
                     deleteCommand.ExecuteNonQuery();
                 }
+                _connection.Close();
             }
         }
 

@@ -7,7 +7,7 @@ namespace api.DataAccess.Tables
 {
     public class TransactionTable : Table<Transaction>
     {
-        public readonly string TableName = "AloeTransaction";
+        public static readonly string TableName = "AloeTransaction";
 
         private SqliteConnection _connection;
 

@@ -24,10 +24,10 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("api/[controller]/create")]
-        public IActionResult Create(string name) 
+        public IActionResult Create(string name, bool isCredit) 
         {
             var table = new AccountTable();
-            table.Insert(new DataAccess.Account() {Name = name});
+            table.Insert(new DataAccess.Account() {Name = name, IsCredit = isCredit});
             return Ok(null);
         }
 

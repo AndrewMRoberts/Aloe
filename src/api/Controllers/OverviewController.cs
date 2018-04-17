@@ -1,4 +1,5 @@
 using System;
+using api.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -9,13 +10,10 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = new [] {
-                new { FirstName = "Jimmy", LastName = "Bob"},
-                new { FirstName = "Mike", LastName = "Krcynzski"},
-                new { FirstName = "Mowry", LastName = "Love"}
-            };
+            var query = new OverviewQueries();
+            var overview = query.SelectOverview();
 
-            return Ok(result);
+            return Ok(overview);
         }
     }
 }

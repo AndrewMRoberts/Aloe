@@ -6,7 +6,7 @@ namespace api.DataAccess.Tables
 {
     public class CategoryTable : Table<Category>
     {
-        public readonly string TableName = "Category";
+        public static readonly string TableName = "Category";
 
         private SqliteConnection _connection;
 
@@ -29,6 +29,13 @@ namespace api.DataAccess.Tables
                             Description text not null
                         )";
                         createCommand.ExecuteNonQuery();
+
+                        var insertCommand = _connection.CreateCommand();
+                        insertCommand.Transaction = transaction;
+                        insertCommand.CommandText =
+                        @"INSERT (Description) VALUES ('Uncategorized')";
+                        insertCommand.ExecuteNonQuery();
+
                         transaction.Commit();
 
                         database.SetTableInitialized(TableName);
