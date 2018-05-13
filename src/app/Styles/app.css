@@ -13,3 +13,7 @@
 .col-hover {
     background-color: yellow;
 }
+
+.currency-format {
+    text-align: right;
+}

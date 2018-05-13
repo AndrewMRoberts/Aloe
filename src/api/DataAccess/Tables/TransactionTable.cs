@@ -70,7 +70,7 @@ namespace api.DataAccess.Tables
                                 new KeyValuePair<string, string>("Id", options.Id.ToString()), needAnd);
                             needAnd = true;
                         }
-                        if (string.IsNullOrWhiteSpace(options.Description)) {
+                        if (!string.IsNullOrWhiteSpace(options.Description)) {
                             AddWhereClauseParameter(selectCommand,
                                 new KeyValuePair<string, string>("Description", options.Description), needAnd);
                             needAnd = true;

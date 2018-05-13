@@ -1,4 +1,5 @@
 const electron = require('electron');
+const contextMenu = require('electron-context-menu')
 const path = require('path');
 const url = require('url');
 const os = require('os');
@@ -6,6 +7,12 @@ const proc = require('child_process');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+contextMenu({
+    prepend: (params, browserWindow) => [{
+        label: 'Rainbow',
+        isible: params.mediaType === 'image'
+    }]
+});
 
 let mainWindow;
 

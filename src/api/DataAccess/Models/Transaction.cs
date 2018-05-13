@@ -11,10 +11,6 @@ namespace api.DataAccess
         public int AccountId {get;set;}
         public int CategoryId {get;set;}
 
-        public Transaction() {
-            CategoryId = 1;
-        }
-
         public bool HasWhereClause() 
         {
             return Id != 0 || !string.IsNullOrWhiteSpace(Description) || Amount != 0 || !TransactionDate.Equals(DateTime.MinValue)
