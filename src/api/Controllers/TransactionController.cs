@@ -15,8 +15,8 @@ namespace api.Controllers
     public class TransactionController : Controller
     {
         [HttpGet]
-        [Route("api/[controller]")]
-        public IActionResult Get()
+        [Route("api/[controller]/getTransactions")]
+        public IActionResult GetTransactions()
         {
             var transactionTable = new TransactionTable();
             var transactions = transactionTable.Select();
@@ -74,7 +74,7 @@ namespace api.Controllers
                         var transaction = new Transaction() 
                         {
                             Amount = Convert.ToDecimal(columns[selectedCols["amount"]]),
-                            Description = columns[selectedCols["description"]],
+                            Description = columns[selectedCols["description"]].Replace("\"", ""),
                             TransactionDate = Convert.ToDateTime(columns[selectedCols["date"]]),
                             AccountId = account
                         };
