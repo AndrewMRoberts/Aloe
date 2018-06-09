@@ -44,10 +44,16 @@ process.on('exit', function() {
 });
 
 function createWindow() {
-    mainWindow = new BrowserWindow({width: width, height: height});
+    mainWindow = new BrowserWindow({
+        width: width, 
+        height: height,
+        webPreferences: {
+            webSecurity: false
+        }
+    });
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'Views/overview.html'),
+        pathname: path.join(__dirname, 'Views/Overview/overview.html'),
         protocol: 'file:',
         slashes: true
     }));

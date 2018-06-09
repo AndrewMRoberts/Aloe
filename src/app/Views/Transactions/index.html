@@ -7,27 +7,11 @@
 
     <title>Overview</title>
 
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='../Styles/app.css'>
+    <link rel='import' href='../Common/imports.html'>
 </head>
 
 <body>
-    <nav class='navbar navbar-toggleable-md navbar-light bg-faded'>
-        <button class='navbar-toggler navbar-toggler-right' type='button' data-toggle='collapse' data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class='navbar-brand' href='#'>
-            <!-- Include img here -->
-            Aloe
-        </a>
-        <div class='collapse navbar-collapse' id='navbar'>
-            <div class='navbar-nav'>
-                <a class='nav-item nav-link' href='overview.html'>Home</a>
-                <a class='nav-item nav-link' href='settings.html'>Settings</a>
-                <a class='nav-item nav-link active' href='#'>Transactions</a>
-            </div>
-        </div>
-    </nav>  
+    <link rel='import' href='../Common/navbar.html'>  
 
     <div class='container'>
         <h1>Transactions</h1>
@@ -59,16 +43,10 @@
             </tbody>
         </table>
     </div>
-    
-    <script type='text/javascript'>window.$ = window.jQuery = require('jquery');</script>
-    <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'></script>
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
-    <script type='text/javascript' src='../Scripts/helpers.js'></script>
 
     <script type='text/javascript'>
         $('#upload-modal-button').click(function() {
-
+            // Get Partial
         });
 
         populateTransactions();
