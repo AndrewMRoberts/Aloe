@@ -53,7 +53,7 @@ function createWindow() {
     });
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'Views/Overview/overview.html'),
+        pathname: path.join(__dirname, 'Views/Overview/index.html'),
         protocol: 'file:',
         slashes: true
     }));
