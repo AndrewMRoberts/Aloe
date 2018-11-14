@@ -1,8 +1,0 @@
-.vscode
-src/api/bin
-src/api/obj
-
-src/app/node_modules
-
-src/npm-debug.log
-src/api/npm-debug.log
